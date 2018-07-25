@@ -14,7 +14,7 @@ public class AboutClass {
     // -----------------------------
     // Constants
     
-    static final double PI = 3.141592653589793;
+    static final double PI = 3.141_592_653_589_793;
     
     // -----------------------------
     // Using this with a Constructor 

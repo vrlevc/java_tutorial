@@ -40,9 +40,9 @@ public class Person {
         public String getName() { return this.name; }
     }
     
-    private String name;
-    private int age;
-    private Sex gender;
+    private final String name;
+    private final int    age;
+    private final Sex    gender;
     
     public Person(String name, int age, Sex gender) {
         this.name = name;

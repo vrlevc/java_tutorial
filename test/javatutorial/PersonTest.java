@@ -6,6 +6,7 @@
 package javatutorial;
 
 import java.util.List;
+import java.io.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,18 +48,12 @@ public class PersonTest {
         assertEquals(boy.getName(), "Male");
     }
     
-    /**
-     * Test of createRoster method, of class Person.
-     */
     @Test
     public void testCreateRoster() {
         List<Person> result = Person.createRoster();
         assertTrue(!result.isEmpty());
     }
 
-    /**
-     * Test of comparePersonsByAge method, of class Person.
-     */
     @Test
     public void testComparePersonsByAge() {
         Person a = new Person("Olga", 39, Person.Sex.FEMALE);
@@ -75,9 +70,6 @@ public class PersonTest {
         assertEquals(cb_Result, result_cb);
     }
 
-    /**
-     * Test of getName method, of class Person.
-     */
     @Test
     public void testGetName() {
         Person instance = new Person("Olga", 39, Person.Sex.FEMALE);
@@ -86,9 +78,6 @@ public class PersonTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getAge method, of class Person.
-     */
     @Test
     public void testGetAge() {
         Person instance = new Person("Olga", 39, Person.Sex.FEMALE);
@@ -97,9 +86,6 @@ public class PersonTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getGender method, of class Person.
-     */
     @Test
     public void testGetGender() {
         Person instance = new Person("Olga", 39, Person.Sex.FEMALE);
@@ -113,4 +99,17 @@ public class PersonTest {
         assertEquals(expResult, result);
     }
     
+    @Test 
+    public void testSystemOutStream() {
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        
+        PrintStream originOut = System.out;
+        System.setOut(new PrintStream(outStream));
+        
+        String result = "Just a string for write into out stream.";
+        System.out.print(result);
+        assertEquals(result, outStream.toString());
+        
+        System.setOut(originOut);
+    }
 }
