@@ -25,5 +25,7 @@ public enum Rank {
     ACE     ("Ace");
     
     private String name;
-    Rank(String name) { this.name = name; }    
+    Rank(String name) { this.name = name; }
+
+    public String toString() { return name; }
 }
