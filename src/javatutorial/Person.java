@@ -32,7 +32,13 @@ public class Person {
         return (a.getAge() < b.getAge() ? -1 : +1);
     }
     
-    public enum Sex { MALE, FEMALE }
+    public enum Sex { 
+        MALE    ("Male"), 
+        FEMALE  ("Female");
+        private final String name;
+        Sex(String name) { this.name = name; }
+        public String getName() { return this.name; }
+    }
     
     private String name;
     private int age;
