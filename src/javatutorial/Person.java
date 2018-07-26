@@ -7,9 +7,16 @@ package javatutorial;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 
 
 public class Person {
+    
+    // @interface CheckPerson
+    
+    interface CheckPerson {
+        boolean test(Person person);
+    }
 
     public static List<Person> createRoster() {
         List<Person> roster = new LinkedList<>();
@@ -60,5 +67,51 @@ public class Person {
     
     public Sex getGender() {
         return gender;
+    }
+     
+    public void printPerson() {
+        System.out.println((gender == Sex.MALE ? "Mr. " : "Ms. ") + name + " is " + age);
+    }
+    
+    // Approach 1: Create Methods that Search for Presons that Match One Characteristic
+    
+    public static void printPersonsOlderThan(List<Person> roster, int age) {
+        for (Person person : roster) {
+            if (person.getAge() >= age) {
+                person.printPerson();
+            }
+        }
+    }
+    
+    // Approach 2: Create More Generalized Search Methods
+    
+    static void printPersonsWithinAgeRange(List<Person> roster, int low, int high) {
+        for (Person person : roster) {
+            if (low <= person.getAge() && person.getAge() <= high) {
+                person.printPerson();
+            }
+        }
+    }
+    
+    // Approach 3: Specify Search Criteris Code in a Local Class
+    // Approach 4: Specify Search Criteria Code in an Anonymous Class
+    // Approach 5: Specify Search Criteria Code with a Lambda Expression
+    
+    static void printPersons(List<Person> roster, CheckPerson tester) {
+        for (Person person : roster) {
+            if (tester.test(person)) {
+                person.printPerson();
+            }
+        }
+    }
+    
+    // Approach 6: Use Standard Functional Interfaces with Lambda Expressions
+    
+    static void printPersonsWithPredicate(List<Person> roster, Predicate<Person> tester) {
+        for (Person person : roster) {
+            if (tester.test(person)) {
+                person.printPerson();
+            }
+        }
     }
 }

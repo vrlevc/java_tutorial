@@ -20,6 +20,28 @@ import static org.junit.Assert.*;
  */
 public class PersonTest {
     
+    class OutStream {
+        private final PrintStream originOutStream ;
+        private final ByteArrayOutputStream currentOutStream;
+        OutStream() {
+            originOutStream = System.out;
+            currentOutStream = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(currentOutStream));
+        }
+        void restorOrigin() {
+            System.setOut(originOutStream);
+        }
+        void reset() {
+            currentOutStream.reset();
+        }
+        String getString() {
+            return currentOutStream.toString();
+        }
+    }
+    
+    private OutStream outStream = null;
+    private List<Person> roster = null;
+    
     public PersonTest() {
     }
     
@@ -33,10 +55,15 @@ public class PersonTest {
     
     @Before
     public void setUp() {
+        outStream = new OutStream();
+        roster = Person.createRoster();
     }
     
     @After
     public void tearDown() {
+        outStream.restorOrigin();
+        outStream = null;
+        roster = null;
     }
 
     @Test 
@@ -101,15 +128,118 @@ public class PersonTest {
     
     @Test 
     public void testSystemOutStream() {
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        
-        PrintStream originOut = System.out;
-        System.setOut(new PrintStream(outStream));
-        
         String result = "Just a string for write into out stream.";
         System.out.print(result);
-        assertEquals(result, outStream.toString());
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testPrintPerson() {
+        String result = "Mr. Vitya is 39\n";
+        Person vitya = new Person("Vitya", 39, Person.Sex.MALE);
+        vitya.printPerson();
+        assertEquals(result, outStream.getString());
         
-        System.setOut(originOut);
+        outStream.reset();
+        
+        result = "Ms. Olga is 39\n";
+        Person olga = new Person("Olga", 39, Person.Sex.FEMALE);
+        olga.printPerson();
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testPrintPersonsOlderThan() {
+        String result = "Mr. Vitya is 38\n" +
+                        "Ms. Olga is 38\n"  +
+                        "Mr. Ivan is 35\n"  +
+                        "Ms. Helen is 61\n" +
+                        "Mr. Tolik is 62\n";        
+        Person.printPersonsOlderThan(roster, 30);
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testPrintPersonsWithinAgeRange() {
+        String result = "Mr. Vitya is 38\n" +
+                        "Ms. Olga is 38\n"  +
+                        "Mr. Ivan is 35\n";     
+        Person.printPersonsWithinAgeRange(roster, 30, 50);
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testSearchCriterisByLocalClass() {
+        String result = "Ms. Olga is 38\n"   +
+                        "Ms. Nastia is 13\n" +
+                        "Ms. Alina is 29\n"  +
+                        "Ms. Diana is 29\n";
+        
+        class CheckPersonEligibleForSelectiveService implements Person.CheckPerson 
+        {
+            @Override
+            public boolean test(Person person) {
+                return     person.getGender() == Person.Sex.FEMALE
+                        && person.getAge()    >= 10
+                        && person.getAge()    <= 50;
+            }
+        }
+        
+        Person.printPersons(roster, new CheckPersonEligibleForSelectiveService());
+        
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testSearchCriterisByAnonymosClass() {
+        String result = "Ms. Olga is 38\n"   +
+                        "Ms. Nastia is 13\n" +
+                        "Ms. Alina is 29\n"  +
+                        "Ms. Diana is 29\n";
+        
+        Person.printPersons(roster, new Person.CheckPerson() {
+            @Override
+            public boolean test(Person person) {
+                return     person.getGender() == Person.Sex.FEMALE
+                        && person.getAge()    >= 10
+                        && person.getAge()    <= 50;
+            }
+        });
+        
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testSearchCriterisByLambdaExpression() {
+        String result = "Ms. Olga is 38\n"   +
+                        "Ms. Nastia is 13\n" +
+                        "Ms. Alina is 29\n"  +
+                        "Ms. Diana is 29\n";
+        
+        Person.printPersons(roster, 
+                (Person person) -> 
+                       person.getGender() == Person.Sex.FEMALE
+                    && person.getAge()    >= 10
+                    && person.getAge()    <= 50
+        );
+        
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testSearchUseStandardFunctionalInterfacesWithLambdaExpressions() {
+        String result = "Ms. Olga is 38\n"   +
+                        "Ms. Nastia is 13\n" +
+                        "Ms. Alina is 29\n"  +
+                        "Ms. Diana is 29\n";
+        
+        Person.printPersonsWithPredicate(roster,
+            person -> 
+                   person.getGender() == Person.Sex.FEMALE
+                && person.getAge() >= 10
+                && person.getAge() <= 50
+        ); 
+        
+        assertEquals(result, outStream.getString());
     }
 }

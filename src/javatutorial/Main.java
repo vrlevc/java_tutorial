@@ -82,51 +82,6 @@ public class Main {
         // Local class
         LocalClass.validatePhoneNumber("123-456-7890", "456-7890");
         
-        // Lamdas
-        
-        List<Person> roster = Person.createRoster();
-        
-        roster
-            .stream()
-            .filter(
-                p ->    p.getGender() == Person.Sex.FEMALE 
-                     && p.getAge() >  12            
-                     && p.getAge() <= 32 )
-            .map(
-                p ->    p.getName())
-            .forEach(
-                name -> System.out.println(name));
-        
-        Predicate<Person> isEdult = 
-                person -> 
-                        person.getGender() == Person.Sex.FEMALE
-                    &&  person.getAge() > 12
-                    &&  person.getAge() < 33; 
-        
-        Function<Person, String> getName =
-                person -> person.getName();
-        
-        Consumer<String> print = name -> System.out.println(name);
-        
-        roster.stream().filter(isEdult).map(getName).forEach(print);
-        
-        Person[] rosterAsArray = roster.toArray(new Person[roster.size()]);
-        Arrays.sort(rosterAsArray, 
-                (Person personA, Person personB) -> { 
-                    if ( personA.getAge() == personB.getAge() ) return 0;
-                    return (personA.getAge() < personB.getAge() ? -1 : +1); 
-                } 
-        );
-        System.out.println("----------------------------------------------");
-        for (Person p : rosterAsArray) {
-            System.out.print(p.getName() + " ");
-        }
-        System.out.println();
-        
-        Arrays.sort(rosterAsArray, (pa, pb) -> Person.comparePersonsByAge(pa, pb) );
-        
-        Arrays.sort(rosterAsArray, Person::comparePersonsByAge);
-        
         // EXERCISES
         Game.playGame();
     }
