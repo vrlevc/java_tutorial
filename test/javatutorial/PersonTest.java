@@ -7,6 +7,10 @@ package javatutorial;
 
 import java.util.List;
 import java.io.*;
+import java.util.Arrays;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -241,5 +245,60 @@ public class PersonTest {
         ); 
         
         assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testLamdas() {
+        String resultExpected = "Olga Nastia Alina Diana ";
+        
+        roster
+            .stream()
+            .filter(
+                p ->    p.getGender() == Person.Sex.FEMALE 
+                     && p.getAge() >= 10            
+                     && p.getAge() <= 50 )
+            .map(
+                p ->    p.getName())
+            .forEach(
+                name -> System.out.print(name + " "));
+        
+        assertEquals(resultExpected, outStream.getString());
+    }
+        
+    @Test
+    public void testLamdasFunction() {
+        String resultExpected = "Olga Nastia Alina Diana ";
+        
+        Predicate<Person> isEdult = 
+                person -> 
+                        person.getGender() == Person.Sex.FEMALE
+                    &&  person.getAge() >= 10
+                    &&  person.getAge() <= 50; 
+        
+        Function<Person, String> getName =
+                person -> person.getName();
+        
+        Consumer<String> print = name -> System.out.print(name + " ");
+        
+        roster.stream().filter(isEdult).map(getName).forEach(print);
+        
+        assertEquals(resultExpected, outStream.getString());
+    }
+    
+    @Test
+    public void testArray() {
+        Person[] rosterAsArray = roster.toArray(new Person[roster.size()]);
+        
+        Arrays.sort(rosterAsArray, 
+                (Person personA, Person personB) -> { 
+                    if ( personA.getAge() == personB.getAge() ) return 0;
+                    return (personA.getAge() < personB.getAge() ? -1 : +1); 
+                } 
+        );
+          
+        fail("TODO : finish this test");
+//        Arrays.sort(rosterAsArray, (pa, pb) -> Person.comparePersonsByAge(pa, pb) );
+        
+//        Arrays.sort(rosterAsArray, Person::comparePersonsByAge);
     }
 }
