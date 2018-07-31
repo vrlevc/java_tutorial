@@ -10,27 +10,24 @@ package Exercises;
  * @author lva
  */
 public class Card {
+
+    private final Rank rank;
+    private final Suit suit;
     
-    public static int TWO = 0;
-    
-    public static String[] RANKS = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace" };
-    public static String[] SUITS = { "clubs", "diamonds", "hearts", "spades" };
-    
-    private final int rank;
-    private final int suit;
-    
-    public Card(int suit, int rank) {
-        assert( 0 <= rank && rank < RANKS.length );
-        assert( 0 <= suit && suit < SUITS.length );
+    public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
     
-    public String getRank() {
-        return RANKS[rank];
+    public Rank getRank() {
+        return rank;
     }
     
-    public String getSuit() {
-        return SUITS[suit];
+    public Suit getSuit() {
+        return suit;
+    }
+    
+    public String toString() {
+        return rank.toString() + " of " + suit.toString();
     }
 }

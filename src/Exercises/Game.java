@@ -18,14 +18,11 @@ public class Game {
         System.out.println("*********************** GAME ****************************");
         System.out.println("*********************************************************");
         
-        System.out.println("Create new deck.");
-        Deck deck = new Deck();
+        System.out.println("Create a new deck.");
         
-        System.out.println("Print cards from the deck.");
-        for (Card card : deck.getCards()) {
-            System.out.println(card.getRank() + " " + card.getSuit());
-        }
+        System.out.println("Shuffle deck.");
         
+        // ....
     }
     
 }

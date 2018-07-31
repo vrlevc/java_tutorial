@@ -13,19 +13,16 @@ import java.util.Arrays;
  */
 public class Deck {
     
-    private Card[] cards;
+    private static Card[] cards = new Card[52];
     
-    // 52 cards deck
-    {
-        cards = new Card[52];
-        for (int suit=0; suit<Card.SUITS.length; ++suit) {
-            for (int rank=0; rank<Card.RANKS.length; ++rank) {
-                cards[suit*Card.RANKS.length+rank] = new Card(suit, rank);
+    // 52 cards deck initialization
+    static {
+        int i = 0;
+        for ( Suit suit : Suit.values() ) {
+            for ( Rank rank : Rank.values() ) {
+                cards[i++] = new Card(rank, suit);
             }
         }
     }       
     
-    public Card[] getCards() {
-        return cards;
-    }
 }
