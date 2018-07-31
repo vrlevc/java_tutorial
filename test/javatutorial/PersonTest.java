@@ -286,7 +286,10 @@ public class PersonTest {
     }
     
     @Test
-    public void testArray() {
+    public void testArraySortLamda() {
+        String result  = "Valentin:1 Nika:5 Nastia:13 Dima:29 Alina:29 "
+                       + "Diana:29 Ivan:35 Vitya:38 Olga:38 Helen:61 Tolik:62 ";
+        
         Person[] rosterAsArray = roster.toArray(new Person[roster.size()]);
         
         Arrays.sort(rosterAsArray, 
@@ -295,10 +298,40 @@ public class PersonTest {
                     return (personA.getAge() < personB.getAge() ? -1 : +1); 
                 } 
         );
-          
-        fail("TODO : finish this test");
-//        Arrays.sort(rosterAsArray, (pa, pb) -> Person.comparePersonsByAge(pa, pb) );
         
-//        Arrays.sort(rosterAsArray, Person::comparePersonsByAge);
+        for(Person p : rosterAsArray)
+            System.out.print( p.getName() + ":" + p.getAge() + " " );
+        
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testArraySortLambdaClassFunction() {
+        String result  = "Valentin:1 Nika:5 Nastia:13 Dima:29 Alina:29 "
+                       + "Diana:29 Ivan:35 Vitya:38 Olga:38 Helen:61 Tolik:62 ";
+        
+        Person[] rosterAsArray = roster.toArray(new Person[roster.size()]);
+        
+        Arrays.sort(rosterAsArray, (pa, pb) -> Person.comparePersonsByAge(pa, pb) );
+        
+        for(Person p : rosterAsArray)
+            System.out.print( p.getName() + ":" + p.getAge() + " " );
+        
+        assertEquals(result, outStream.getString());
+    }
+    
+    @Test
+    public void testArraySortClassFunction() {
+        String result  = "Valentin:1 Nika:5 Nastia:13 Dima:29 Alina:29 "
+                       + "Diana:29 Ivan:35 Vitya:38 Olga:38 Helen:61 Tolik:62 ";
+        
+        Person[] rosterAsArray = roster.toArray(new Person[roster.size()]);
+        
+        Arrays.sort(rosterAsArray, Person::comparePersonsByAge);
+        
+        for(Person p : rosterAsArray)
+            System.out.print( p.getName() + ":" + p.getAge() + " " );
+        
+        assertEquals(result, outStream.getString());
     }
 }
