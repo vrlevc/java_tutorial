@@ -21,22 +21,98 @@ public class RankTest {
     public RankTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
+    /**
+     * Test of values method, of class Rank.
+     */
+    @Test
+    public void testValues() {
+        Rank[] expResult = new Rank[] { Rank.DEUCE, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX,
+                                        Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN, Rank.JACK,
+                                        Rank.QUEEN, Rank.KING, Rank.ACE 
+                                      };
+        
+        Rank[] result = Rank.values();
+        assertArrayEquals(expResult, result);
     }
     
-    @AfterClass
-    public static void tearDownClass() {
+     /**
+     * Test of valueOf method, of class Rank.
+     */
+    @Test
+    public void testValueOf() {
+        String name = null;
+        Rank expResult = null;
+        Rank result = null;
+        
+        name = "DEUCE";
+        expResult = Rank.DEUCE;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+
+        name = "THREE";
+        expResult = Rank.THREE;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "FOUR";
+        expResult = Rank.FOUR;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "FIVE";
+        expResult = Rank.FIVE;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "SIX";
+        expResult = Rank.SIX;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "SEVEN";
+        expResult = Rank.SEVEN;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "EIGHT";
+        expResult = Rank.EIGHT;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "NINE";
+        expResult = Rank.NINE;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "TEN";
+        expResult = Rank.TEN;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "JACK";
+        expResult = Rank.JACK;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "QUEEN";
+        expResult = Rank.QUEEN;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "KING";
+        expResult = Rank.KING;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
+        
+        name = "ACE";
+        expResult = Rank.ACE;
+        result = Rank.valueOf(name);
+        assertEquals(expResult, result);
     }
     
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-    
+    /**
+     * Test of valueOf method, of class Rank.
+     */
     @Test
     public void testToString() {
         assertEquals(Rank.DEUCE.toString()  , "2");
