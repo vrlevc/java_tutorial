@@ -5,24 +5,22 @@
  */
 package Exercises;
 
-import java.util.Arrays;
+import java.util.*;
 
-/**
- *
- * @author lva
- */
-public class Deck {
+public interface Deck {
     
-    private static PlayingCard[] cards = new PlayingCard[52];
+    List<Card> getCards();
+    Deck deckFactory();
+    int size();
+    void addCard(Card card);
+    void addCards(List<Card> cards);
+    void addDeck(Deck deck);
+    void shuffle();
+    void sort();
+    void sort(Comparator<Card> c);
+    String deckToString();
     
-    // 52 cards deck initialization
-    static {
-        int i = 0;
-        for ( Suit suit : Suit.values() ) {
-            for ( Rank rank : Rank.values() ) {
-                cards[i++] = new PlayingCard(rank, suit);
-            }
-        }
-    }       
+    Map<Integer, Deck> deal(int players, int numberOfCards)
+            throws IllegalArgumentException;
     
 }

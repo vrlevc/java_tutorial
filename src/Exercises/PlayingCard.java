@@ -9,7 +9,7 @@ package Exercises;
  *
  * @author lva
  */
-public class PlayingCard {
+public class PlayingCard implements Card {
 
     private final Rank rank;
     private final Suit suit;
@@ -19,12 +19,23 @@ public class PlayingCard {
         this.suit = suit;
     }
     
+    @Override
     public Rank getRank() {
         return rank;
     }
     
+    @Override
     public Suit getSuit() {
         return suit;
+    }
+    
+    @Override
+    public int compareTo(Card o) {
+        return this.hashCode() - o.hashCode();
+    }
+    
+    public int hashCode() {
+        return ((suit.value()-1)*13)+rank.value();
     }
     
     public String toString() {
