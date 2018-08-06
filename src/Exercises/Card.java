@@ -8,10 +8,10 @@ package Exercises;
 public interface Card extends Comparable<Card> {
     
     public enum Suit {
-        DIAMODS (1, "Diamonds"),
-        CLUBS   (2, "Clubs"   ),
-        HEARTS  (3, "Hearts"  ),
-        SPADES  (4, "Spades"  );
+        DIAMONDS (1, "Diamonds"),
+        CLUBS    (2, "Clubs"   ),
+        HEARTS   (3, "Hearts"  ),
+        SPADES   (4, "Spades"  );
         
         private final int value;
         private final String text;

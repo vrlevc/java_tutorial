@@ -22,8 +22,11 @@ public class SuitTest {
      */
     @Test
     public void testValues() {
-        Suit[] expResult = new Suit[] { Suit.DIAMONDS, Suit.CLUBS, Suit.HEARTS, Suit.SPADES };
-        Suit[] result = Suit.values();
+        Card.Suit[] expResult = new Card.Suit[] { 
+            Card.Suit.DIAMONDS, Card.Suit.CLUBS, 
+            Card.Suit.HEARTS, Card.Suit.SPADES };
+        
+        Card.Suit[] result = Card.Suit.values();
         assertArrayEquals(expResult, result);
     }
 
@@ -33,27 +36,27 @@ public class SuitTest {
     @Test
     public void testValueOf() {
         String name = null;
-        Suit expResult = null;
-        Suit result = null;
+        Card.Suit expResult = null;
+        Card.Suit result = null;
         
         name = "DIAMONDS";
-        expResult = Suit.DIAMONDS;
-        result = Suit.valueOf(name);
+        expResult = Card.Suit.DIAMONDS;
+        result = Card.Suit.valueOf(name);
         assertEquals(expResult, result);
         
         name = "CLUBS";
-        expResult = Suit.CLUBS;
-        result = Suit.valueOf(name);
+        expResult = Card.Suit.CLUBS;
+        result = Card.Suit.valueOf(name);
         assertEquals(expResult, result);
         
         name = "HEARTS";
-        expResult = Suit.HEARTS;
-        result = Suit.valueOf(name);
+        expResult = Card.Suit.HEARTS;
+        result = Card.Suit.valueOf(name);
         assertEquals(expResult, result);
         
         name = "SPADES";
-        expResult = Suit.SPADES;
-        result = Suit.valueOf(name);
+        expResult = Card.Suit.SPADES;
+        result = Card.Suit.valueOf(name);
         assertEquals(expResult, result);
     }
 
@@ -62,10 +65,10 @@ public class SuitTest {
      */
     @Test
     public void testToString() {
-        assertEquals(Suit.DIAMONDS.toString(), "Diamonds");
-        assertEquals(Suit.CLUBS.toString()   , "Clubs"   );
-        assertEquals(Suit.HEARTS.toString()  , "Hearts"  );
-        assertEquals(Suit.SPADES.toString()  , "Spades"  );
+        assertEquals("DIAMONDS" , Card.Suit.DIAMONDS.toString());
+        assertEquals("CLUBS"    , Card.Suit.CLUBS.toString());
+        assertEquals("HEARTS"   , Card.Suit.HEARTS.toString());
+        assertEquals("SPADES"   , Card.Suit.SPADES.toString());
     }
     
 }
