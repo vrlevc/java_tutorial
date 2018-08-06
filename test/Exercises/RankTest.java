@@ -22,12 +22,14 @@ public class RankTest {
      */
     @Test
     public void testValues() {
-        Rank[] expResult = new Rank[] { Rank.DEUCE, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX,
-                                        Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN, Rank.JACK,
-                                        Rank.QUEEN, Rank.KING, Rank.ACE 
-                                      };
+        Card.Rank[] expResult 
+            = new Card.Rank[] { 
+                Card.Rank.DEUCE, Card.Rank.THREE, Card.Rank.FOUR, Card.Rank.FIVE, Card.Rank.SIX,
+                Card.Rank.SEVEN, Card.Rank.EIGHT, Card.Rank.NINE, Card.Rank.TEN, Card.Rank.JACK,
+                Card.Rank.QUEEN, Card.Rank.KING, Card.Rank.ACE 
+            };
         
-        Rank[] result = Rank.values();
+        Card.Rank[] result = Card.Rank.values();
         assertArrayEquals(expResult, result);
     }
     
@@ -37,72 +39,72 @@ public class RankTest {
     @Test
     public void testValueOf() {
         String name = null;
-        Rank expResult = null;
-        Rank result = null;
+        Card.Rank expResult = null;
+        Card.Rank result = null;
         
         name = "DEUCE";
-        expResult = Rank.DEUCE;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.DEUCE;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
 
         name = "THREE";
-        expResult = Rank.THREE;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.THREE;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "FOUR";
-        expResult = Rank.FOUR;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.FOUR;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "FIVE";
-        expResult = Rank.FIVE;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.FIVE;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "SIX";
-        expResult = Rank.SIX;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.SIX;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "SEVEN";
-        expResult = Rank.SEVEN;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.SEVEN;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "EIGHT";
-        expResult = Rank.EIGHT;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.EIGHT;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "NINE";
-        expResult = Rank.NINE;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.NINE;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "TEN";
-        expResult = Rank.TEN;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.TEN;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "JACK";
-        expResult = Rank.JACK;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.JACK;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "QUEEN";
-        expResult = Rank.QUEEN;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.QUEEN;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "KING";
-        expResult = Rank.KING;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.KING;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
         
         name = "ACE";
-        expResult = Rank.ACE;
-        result = Rank.valueOf(name);
+        expResult = Card.Rank.ACE;
+        result = Card.Rank.valueOf(name);
         assertEquals(expResult, result);
     }
     
@@ -111,18 +113,52 @@ public class RankTest {
      */
     @Test
     public void testToString() {
-        assertEquals(Rank.DEUCE.toString()  , "2");
-        assertEquals(Rank.THREE.toString()  , "3");
-        assertEquals(Rank.FOUR.toString()   , "4");
-        assertEquals(Rank.FIVE.toString()   , "5");
-        assertEquals(Rank.SIX.toString()    , "6");
-        assertEquals(Rank.SEVEN.toString()  , "7");
-        assertEquals(Rank.EIGHT.toString()  , "8");
-        assertEquals(Rank.NINE.toString()   , "9");
-        assertEquals(Rank.TEN.toString()    , "10");
-        assertEquals(Rank.JACK.toString()   , "Jack");
-        assertEquals(Rank.QUEEN.toString()  , "Queen");
-        assertEquals(Rank.KING.toString()   , "King");
-        assertEquals(Rank.ACE.toString()    , "Ace");
+        assertEquals("DEUCE",   Card.Rank.DEUCE.toString());
+        assertEquals("THREE",   Card.Rank.THREE.toString());
+        assertEquals("FOUR",    Card.Rank.FOUR.toString());
+        assertEquals("FIVE",    Card.Rank.FIVE.toString());
+        assertEquals("SIX",     Card.Rank.SIX.toString());
+        assertEquals("SEVEN",   Card.Rank.SEVEN.toString());
+        assertEquals("EIGHT",   Card.Rank.EIGHT.toString());
+        assertEquals("NINE",    Card.Rank.NINE.toString());
+        assertEquals("TEN",     Card.Rank.TEN.toString());
+        assertEquals("JACK",    Card.Rank.JACK.toString());
+        assertEquals("QUEEN",   Card.Rank.QUEEN.toString());
+        assertEquals("KING",    Card.Rank.KING.toString());
+        assertEquals("ACE",     Card.Rank.ACE.toString());
+    }
+    
+    @Test
+    public void testValue() {
+        assertEquals( 2, Card.Rank.DEUCE.value());
+        assertEquals( 3, Card.Rank.THREE.value());
+        assertEquals( 4, Card.Rank.FOUR.value() );
+        assertEquals( 5, Card.Rank.FIVE.value() );
+        assertEquals( 6, Card.Rank.SIX.value()  );
+        assertEquals( 7, Card.Rank.SEVEN.value());
+        assertEquals( 8, Card.Rank.EIGHT.value());
+        assertEquals( 9, Card.Rank.NINE.value() );
+        assertEquals(10, Card.Rank.TEN.value()  );
+        assertEquals(11, Card.Rank.JACK.value() );
+        assertEquals(12, Card.Rank.QUEEN.value());
+        assertEquals(13, Card.Rank.KING.value() );
+        assertEquals(14, Card.Rank.ACE.value()  );
+    }
+    
+    @Test
+    public void testText() {
+        assertEquals("Two", Card.Rank.DEUCE.text());
+        assertEquals("Three", Card.Rank.THREE.text());
+        assertEquals("Four", Card.Rank.FOUR.text() );
+        assertEquals("Five", Card.Rank.FIVE.text() );
+        assertEquals("Six", Card.Rank.SIX.text()  );
+        assertEquals("Seven", Card.Rank.SEVEN.text());
+        assertEquals("Eight", Card.Rank.EIGHT.text());
+        assertEquals("Nine", Card.Rank.NINE.text() );
+        assertEquals("Ten", Card.Rank.TEN.text()  );
+        assertEquals("Jack", Card.Rank.JACK.text() );
+        assertEquals("Quin", Card.Rank.QUEEN.text());
+        assertEquals("King", Card.Rank.KING.text() );
+        assertEquals("Ace", Card.Rank.ACE.text()  );
     }
 }
