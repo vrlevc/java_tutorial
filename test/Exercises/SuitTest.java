@@ -65,10 +65,25 @@ public class SuitTest {
      */
     @Test
     public void testToString() {
-        assertEquals("DIAMONDS" , Card.Suit.DIAMONDS.toString());
-        assertEquals("CLUBS"    , Card.Suit.CLUBS.toString());
-        assertEquals("HEARTS"   , Card.Suit.HEARTS.toString());
-        assertEquals("SPADES"   , Card.Suit.SPADES.toString());
+        assertEquals("DIAMONDS" , Card.Suit.DIAMONDS.toString() );
+        assertEquals("CLUBS"    , Card.Suit.CLUBS.toString()    );
+        assertEquals("HEARTS"   , Card.Suit.HEARTS.toString()   );
+        assertEquals("SPADES"   , Card.Suit.SPADES.toString()   );
     }
     
+        @Test
+    public void testValue() {
+        assertEquals( 1, Card.Suit.DIAMONDS.value() );
+        assertEquals( 2, Card.Suit.CLUBS.value()    );
+        assertEquals( 3, Card.Suit.HEARTS.value()   );
+        assertEquals( 4, Card.Suit.SPADES.value()   );
+    }
+    
+    @Test
+    public void testText() {
+        assertEquals( "Diamonds" , Card.Suit.DIAMONDS.text());
+        assertEquals( "Clubs"    , Card.Suit.CLUBS.text()   );
+        assertEquals( "Hearts"   , Card.Suit.HEARTS.text()  );
+        assertEquals( "Spades"   , Card.Suit.SPADES.text()  );
+    }
 }
