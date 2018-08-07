@@ -35,9 +35,9 @@ public class SuitTest {
      */
     @Test
     public void testValueOf() {
-        String name = null;
-        Card.Suit expResult = null;
-        Card.Suit result = null;
+        String name;
+        Card.Suit expResult;
+        Card.Suit result;
         
         name = "DIAMONDS";
         expResult = Card.Suit.DIAMONDS;
