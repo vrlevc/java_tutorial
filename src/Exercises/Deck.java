@@ -8,16 +8,16 @@ package Exercises;
 import java.util.*;
 
 public interface Deck {
-    
-    List<Card> getCards();
-    Deck deckFactory();
+
+    Deck deckFactory();    
     int size();
+    List<Card> getCards();
     void addCard(Card card);
     void addCards(List<Card> cards);
     void addDeck(Deck deck);
-    void shuffle();
     void sort();
-    void sort(Comparator<Card> c);
+    void sort(Comparator<Card> c);    
+    void shuffle();
     String deckToString();
     
     Map<Integer, Deck> deal(int players, int numberOfCards)
