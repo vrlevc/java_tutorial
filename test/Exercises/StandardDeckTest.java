@@ -5,6 +5,7 @@
  */
 package Exercises;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +48,10 @@ public class StandardDeckTest {
     public void testDeckFactory() {
         System.out.println("deckFactory");
         StandardDeck instance = new StandardDeck();
-        Deck expResult = null;
+        assertNotNull(instance);
         Deck result = instance.deckFactory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertEquals(0, result.size());
     }
 
     /**
@@ -61,11 +61,10 @@ public class StandardDeckTest {
     public void testSize() {
         System.out.println("size");
         StandardDeck instance = new StandardDeck();
-        int expResult = 0;
+        assertNotNull(instance);
+        int expResult = Card.Suit.values().length * Card.Rank.values().length;
         int result = instance.size();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -75,9 +74,8 @@ public class StandardDeckTest {
     public void testGetCards() {
         System.out.println("getCards");
         StandardDeck instance = new StandardDeck();
-        List<Card> expResult = null;
+        assertNotNull(instance);
         List<Card> result = instance.getCards();
-        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
