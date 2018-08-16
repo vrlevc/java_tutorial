@@ -49,6 +49,8 @@ public class StandardDeckTest {
         System.out.println("deckFactory");
         StandardDeck instance = new StandardDeck();
         assertNotNull(instance);
+        assertNotEquals(0, instance.size());
+        
         Deck result = instance.deckFactory();
         assertNotNull(result);
         assertEquals(0, result.size());
