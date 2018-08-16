@@ -78,8 +78,16 @@ public class StandardDeckTest {
         StandardDeck instance = new StandardDeck();
         assertNotNull(instance);
         List<Card> result = instance.getCards();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        
+        List<Card> cards = new ArrayList<>();
+        cards.add(new PlayingCard(Card.Rank.ACE, Card.Suit.CLUBS));
+        cards.add(new PlayingCard(Card.Rank.ACE, Card.Suit.DIAMONDS));
+        cards.add(new PlayingCard(Card.Rank.DEUCE, Card.Suit.CLUBS));
+        StandardDeck deckFromCards = new StandardDeck(cards);
+        List<Card> deckCards = deckFromCards.getCards();
+        assertEquals(deckCards, cards);
     }
 
     /**
@@ -88,11 +96,12 @@ public class StandardDeckTest {
     @Test
     public void testAddCard() {
         System.out.println("addCard");
-        Card card = null;
-        StandardDeck instance = new StandardDeck();
+        Card card = new PlayingCard(Card.Rank.ACE, Card.Suit.SPADES);
+        StandardDeck instance = new StandardDeck(new ArrayList<>());
+        
+        assertFalse(instance.getCards().contains(card));
         instance.addCard(card);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getCards().contains(card));
     }
 
     /**
@@ -101,11 +110,22 @@ public class StandardDeckTest {
     @Test
     public void testAddCards() {
         System.out.println("addCards");
-        List<Card> cards = null;
-        StandardDeck instance = new StandardDeck();
+        Card cardA = new PlayingCard(Card.Rank.ACE, Card.Suit.SPADES);
+        Card cardB = new PlayingCard(Card.Rank.JACK, Card.Suit.DIAMONDS);
+        Card cardC = new PlayingCard(Card.Rank.QUEEN, Card.Suit.CLUBS);
+        List<Card> cards = new ArrayList<>();
+        cards.add(cardA);
+        cards.add(cardB);
+        cards.add(cardC);
+        StandardDeck instance = new StandardDeck(new ArrayList<>());
+        
+        assertFalse(instance.getCards().contains(cardA));
+        assertFalse(instance.getCards().contains(cardB));
+        assertFalse(instance.getCards().contains(cardC));
         instance.addCards(cards);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getCards().contains(cardA));
+        assertTrue(instance.getCards().contains(cardB));
+        assertTrue(instance.getCards().contains(cardC));
     }
 
     /**
@@ -114,11 +134,26 @@ public class StandardDeckTest {
     @Test
     public void testAddDeck() {
         System.out.println("addDeck");
-        Deck deck = null;
-        StandardDeck instance = new StandardDeck();
-        instance.addDeck(deck);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        List<Card> cards = new ArrayList<>();
+        cards.add(new PlayingCard(Card.Rank.ACE, Card.Suit.SPADES));
+        cards.add(new PlayingCard(Card.Rank.JACK, Card.Suit.DIAMONDS));
+        cards.add(new PlayingCard(Card.Rank.QUEEN, Card.Suit.CLUBS));
+        Deck deckA = new StandardDeck(cards);
+        
+        cards = new ArrayList<>();
+        cards.add(new PlayingCard(Card.Rank.EIGHT, Card.Suit.SPADES));
+        cards.add(new PlayingCard(Card.Rank.FIVE, Card.Suit.CLUBS));
+        cards.add(new PlayingCard(Card.Rank.SIX, Card.Suit.HEARTS));
+        Deck deckB = new StandardDeck(cards);
+        
+        StandardDeck instance = new StandardDeck(new ArrayList<>());
+        assertTrue(instance.size() == 0);
+        instance.addDeck(deckA);
+        assertEquals(deckA.getCards(), instance.getCards());
+        instance.addDeck(deckB);
+        deckA.addCards(deckB.getCards());
+        assertEquals(deckA.getCards(), instance.getCards());
     }
 
     /**
