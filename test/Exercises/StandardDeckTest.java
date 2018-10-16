@@ -223,4 +223,56 @@ public class StandardDeckTest {
         fail("The test case is a prototype.");
     }
     
+    @Test
+    public void testSortByClass() {
+        StandardDeck deck = new StandardDeck();
+        deck.shuffle();
+        deck.sort( new SortByRankThenSuit() );
+    }
+    
+    @Test
+    public void testSortByLambda() {
+        StandardDeck deck = new StandardDeck();
+        
+        deck.shuffle();
+        deck.sort( 
+            (firstCard, secondCard) -> 
+                firstCard.getRank().value() - secondCard.getRank().value() );
+        
+        deck.shuffle();
+        deck.sort( Comparator.comparing((card) -> card.getRank()) );
+        
+        deck.shuffle();
+        deck.sort( Comparator.comparing(Card::getRank) );
+    }
+    
+    @Test
+    public void testSortByTwoDim() {
+        StandardDeck deck = new StandardDeck();
+        
+        deck.shuffle();
+        deck.sort(
+            (firstCard, secondCard) -> {
+                int compare =
+                    firstCard.getRank().value() - secondCard.getRank().value();
+                if (compare != 0)
+                    return compare;
+                else
+                    return firstCard.getSuit().value() - secondCard.getSuit().value();
+            }      
+        ); 
+        
+        deck.shuffle();
+        deck.sort( 
+            Comparator
+                .comparing(Card::getRank)
+                .thenComparing( Comparator.comparing(Card::getSuit) ) );
+        
+        
+        deck.sort( 
+            Comparator
+                .comparing(Card::getRank)
+                    .reversed()
+                    .thenComparing( Comparator.comparing(Card::getSuit) ) );
+    }    
 }

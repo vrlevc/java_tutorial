@@ -9,9 +9,9 @@ import java.util.*;
 
 public interface Deck {
 
+    List<Card> getCards();
     Deck deckFactory();    
     int size();
-    List<Card> getCards();
     void addCard(Card card);
     void addCards(List<Card> cards);
     void addDeck(Deck deck);
