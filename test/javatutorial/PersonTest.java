@@ -22,25 +22,6 @@ import static org.junit.Assert.*;
  */
 public class PersonTest {
     
-    class OutStream {
-        private final PrintStream originOutStream ;
-        private final ByteArrayOutputStream currentOutStream;
-        OutStream() {
-            originOutStream = System.out;
-            currentOutStream = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(currentOutStream));
-        }
-        void restorOrigin() {
-            System.setOut(originOutStream);
-        }
-        void reset() {
-            currentOutStream.reset();
-        }
-        String getString() {
-            return currentOutStream.toString();
-        }
-    }
-    
     private OutStream outStream = null;
     private List<Person> roster = null;
     
