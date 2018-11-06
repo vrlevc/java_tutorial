@@ -55,6 +55,13 @@ public class WildcardsTests {
     
     // Lower Bounded Wildcards
     
+    void addNumbers(List<? super Integer> list) {
+        // Works for List<Object>, List<Number>, List<Integer>
+        for (int i = 1; i <= 10; i++) {
+            list.add(i);
+        }
+    }
+    
     
     
 }
