@@ -62,6 +62,16 @@ public class WildcardsTests {
         }
     }
     
+    // Wildcard Capture and Helper Methods
+    
+    void foo(List<?> i) {
+        fooHelper(i);
+    }
+    
+    private <T> void fooHelper(List<T> l) {
+        l.set(0, l.get(0));
+    }
+    
     
     
 }
