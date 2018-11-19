@@ -140,4 +140,11 @@ public class BasicIO {
         }
         System.out.println("Sum is " + sum);
     }
+    
+    @Test
+    public void testFormat() {
+        System.out.format("Teh square root of %d is %f.%n", 2, Math.sqrt(2));
+        System.out.format("%f, %1$+020.10f %n", Math.PI);
+        System.out.format("%f, %<+020.10f %n", Math.PI);
+    }
 }
