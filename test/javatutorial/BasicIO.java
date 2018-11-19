@@ -23,7 +23,11 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -258,5 +262,66 @@ public class BasicIO {
     @Test
     public void testPrintInvoice() throws IOException {
         printInvoice();
+    }
+    
+    //----------------------------------------------------------------------------------------------
+    // OBJECT STREAMS
+    
+    static final BigDecimal[] pricesObj = { 
+        new BigDecimal("19.99"), 
+        new BigDecimal("9.99"),
+        new BigDecimal("15.99"),
+        new BigDecimal("3.99"),
+        new BigDecimal("4.99") 
+    };
+    
+    public static void createInvoiceObj() throws IOException {
+       try (
+            FileOutputStream file = new FileOutputStream(dataFile);
+            BufferedOutputStream buffered = new BufferedOutputStream(file);
+            ObjectOutputStream out = new ObjectOutputStream(buffered)
+        ){
+            out.writeObject(Calendar.getInstance());
+            for (int i=0; i<prices.length; i++) {
+                out.writeObject(pricesObj[i]);
+                out.writeInt(units[i]);
+                out.writeUTF(descs[i]);
+            }
+        } 
+    }
+    
+    public static void printInvoiceObj() throws IOException, ClassNotFoundException {
+        BigDecimal total = new BigDecimal(0);
+        try (
+            FileInputStream file = new FileInputStream(dataFile);
+            BufferedInputStream buffered = new BufferedInputStream(file);
+            ObjectInputStream in = new ObjectInputStream(buffered);
+        ) {
+            BigDecimal price;
+            int unit;
+            String desc;
+            
+            Calendar date = (Calendar) in.readObject();
+            System.out.format ("On %tA, %<tB %<te, %<tY:%n", date);
+            
+            while (true) {
+                price = (BigDecimal) in.readObject();
+                unit = in.readInt();
+                desc = in.readUTF();
+                System.out.format("You ordered %d units of %s as $%.2f %n", unit, desc, price);
+                total = total.add(price.multiply(new BigDecimal(unit)));
+            }
+        } catch (EOFException e) { }
+        System.out.format("For a TOTAL of: $%.2f %n", total);
+    }
+    
+    @Test 
+    public void testCreateInvoiceObj() throws IOException {
+        createInvoiceObj();
+    }
+    
+    @Test
+    public void testPrintInvoiceObj() throws IOException, ClassNotFoundException {
+        printInvoiceObj();
     }
 }
