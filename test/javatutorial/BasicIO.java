@@ -18,11 +18,15 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Console;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
+
 
 /**
  *
@@ -194,5 +198,65 @@ public class BasicIO {
     static void change(String login, char[] password) {
         // Modify this method to change
         // password according to your rules.
+    }
+    
+    //----------------------------------------------------------------------------------------------
+    // DATA STREAMS
+    
+    static final String dataFile  = "invoicedata";
+        
+    static final double[] prices = { 19.99, 9.99, 15.99, 3.99, 4.99 };
+    static final int[] units = { 12, 8, 13, 29, 50 };
+    static final String[] descs = {
+        "Java T-shirt",
+        "Java Mug",
+        "Duke Juggling Dolls",
+        "Java Pin",
+        "Java Key Chain"
+    };
+    
+    public static void createInvoice() throws IOException {
+        try (
+            FileOutputStream file = new FileOutputStream(dataFile);
+            BufferedOutputStream buffered = new BufferedOutputStream(file);
+            DataOutputStream out = new DataOutputStream(buffered)
+        ){
+            for (int i=0; i<prices.length; i++) {
+                out.writeDouble(prices[i]);
+                out.writeInt(units[i]);
+                out.writeUTF(descs[i]);
+            }
+        }
+    }
+    
+    public static void printInvoice() throws IOException {
+        double total = 0;
+        try (
+            FileInputStream file = new FileInputStream(dataFile);
+            BufferedInputStream buffered = new BufferedInputStream(file);
+            DataInputStream in = new DataInputStream(buffered);
+        ) {
+            double price;
+            int unit;
+            String desc;
+            while (true) {
+                price = in.readDouble();
+                unit = in.readInt();
+                desc = in.readUTF();
+                System.out.format("You ordered %d units of %s as $%.2f %n", unit, desc, price);
+                total += unit * price;
+            }
+        } catch (EOFException e) { }
+        System.out.format("For a TOTAL of: $%.2f %n", total);
+    }
+    
+    @Test 
+    public void testCreateInvoice() throws IOException {
+        createInvoice();
+    }
+    
+    @Test
+    public void testPrintInvoice() throws IOException {
+        printInvoice();
     }
 }
