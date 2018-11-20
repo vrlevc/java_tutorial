@@ -7,7 +7,6 @@ package javatutorial;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.io.FileInputStream;
@@ -38,91 +37,127 @@ import java.util.Scanner;
  */
 public class BasicIO {
 
+    static final String xanaduFile = "xanadu.txt";
+    static final String outagainFile = "outagain.txt";
+    
     @Test
-    public void testCopyBytes() throws FileNotFoundException, IOException {
+    public void testCopyBytes() {
         
         try (
-            FileInputStream in = new FileInputStream("xanadu.txt");
-            FileOutputStream out = new FileOutputStream("outagain.txt") 
+            FileInputStream in = new FileInputStream(xanaduFile);
+            FileOutputStream out = new FileOutputStream(outagainFile) 
         ) {
             int c;
             while ( (c = in.read()) != -1 ) {
                 out.write(c);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + xanaduFile + " or " + outagainFile + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
         }
         
     }
     
     @Test
-    public void testCopyBytesBuffered() throws FileNotFoundException, IOException {
+    public void testCopyBytesBuffered() {
         
         try (
-            BufferedInputStream bufIN = new BufferedInputStream(new FileInputStream("xanadu.txt"));
-            BufferedOutputStream bufOUT = new BufferedOutputStream(new FileOutputStream("outagain.txt"))
+            BufferedInputStream bufIN = new BufferedInputStream(new FileInputStream(xanaduFile));
+            BufferedOutputStream bufOUT = new BufferedOutputStream(new FileOutputStream(outagainFile))
         ) {
             int c;
             while ( (c = bufIN.read()) != -1 ) {
                 bufOUT.write(c);
             }
             bufOUT.flush();
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + xanaduFile + " or " + outagainFile + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
         }
         
     }
     
     @Test 
-    public void testCopyCharacters() throws FileNotFoundException, IOException {
+    public void testCopyCharacters() {
         
         try (
-            FileReader inputStream  = new FileReader("xanadu.txt");
-            FileWriter outputStream = new FileWriter("outagain.txt")
+            FileReader inputStream  = new FileReader(xanaduFile);
+            FileWriter outputStream = new FileWriter(outagainFile)
         ) {
             int c;
             while ( (c = inputStream.read()) != -1 ) {
                 outputStream.write(c);
             }
             outputStream.flush();
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + xanaduFile + " or " + outagainFile + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
         }        
     }
     
     @Test 
-    public void testCopyCharactersBuffered() throws FileNotFoundException, IOException {
+    public void testCopyCharactersBuffered() {
         
         try (
-            BufferedReader bufferedInput = new BufferedReader(new FileReader("xanadu.txt"));
-            BufferedWriter bufferedOutput = new BufferedWriter(new FileWriter("outagain.txt"))
+            BufferedReader bufferedInput = new BufferedReader(new FileReader(xanaduFile));
+            BufferedWriter bufferedOutput = new BufferedWriter(new FileWriter(outagainFile))
         ) {
             int c;
             while ( (c = bufferedInput.read()) != -1 ) {
                 bufferedOutput.write(c);
             }
-        }        
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + xanaduFile + " or " + outagainFile + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
+        }           
     }
     
     @Test
-    public void testCopyLines() throws FileNotFoundException, IOException {
+    public void testCopyLines() {
         
         try (
-            BufferedReader inBufferedStream = new BufferedReader(new FileReader("xanadu.txt"));
-            PrintWriter outPrintStream = new PrintWriter(new FileWriter("outagain.txt"))
+            BufferedReader inBufferedStream = new BufferedReader(new FileReader(xanaduFile));
+            PrintWriter outPrintStream = new PrintWriter(new FileWriter(outagainFile))
         ) {
             String l;
             while ( ( l = inBufferedStream.readLine() ) != null ) {
                 outPrintStream.println(l);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + xanaduFile + " or " + outagainFile + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
         }
     }
     
     @Test
-    public void testScanXan() throws FileNotFoundException, IOException {
-        try (Scanner s = new Scanner(new BufferedReader(new FileReader("xanadu.txt")))) {
+    public void testScanXan() {
+        try (Scanner s = new Scanner(new BufferedReader(new FileReader(xanaduFile)))) {
             while (s.hasNext()) {
                 System.out.println(s.next());
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + xanaduFile + " not found.");
+            fail();
         }
     }
     
     @Test
-    public void testScanSum() throws FileNotFoundException, IOException {
+    public void testScanSum() {
         double sum = 0;
         try (Scanner s = new Scanner(new BufferedReader(new FileReader("usnumbers.txt")))){
             s.useLocale(Locale.US);
@@ -133,6 +168,9 @@ public class BasicIO {
                     s.next();
                 }
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File usnumbers.txt not found.");
+            fail();
         }
         System.out.println("Sum is " + sum);
     }
@@ -205,7 +243,7 @@ public class BasicIO {
         "Java Key Chain"
     };
     
-    public static void createInvoice() throws IOException {
+    public static void createInvoice() {
         try (DataOutputStream out = 
                 new DataOutputStream(
                     new BufferedOutputStream(
@@ -216,10 +254,16 @@ public class BasicIO {
                 out.writeInt(units[i]);
                 out.writeUTF(descs[i]);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + dataFile + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
         }
     }
     
-    public static void printInvoice() throws IOException {
+    public static void printInvoice() {
         double total = 0;
         try (DataInputStream in = 
                 new DataInputStream(
@@ -236,17 +280,25 @@ public class BasicIO {
                 System.out.format("You ordered %d units of %s as $%.2f %n", unit, desc, price);
                 total += unit * price;
             }
-        } catch (EOFException e) { }
+        } catch (EOFException e) {
+            System.out.println("Reach EOF");
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + dataFile + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
+        }
         System.out.format("For a TOTAL of: $%.2f %n", total);
     }
     
     @Test 
-    public void testCreateInvoice() throws IOException {
+    public void testCreateInvoice() {
         createInvoice();
     }
     
     @Test
-    public void testPrintInvoice() throws IOException {
+    public void testPrintInvoice() {
         printInvoice();
     }
     
@@ -262,7 +314,7 @@ public class BasicIO {
         new BigDecimal("4.99") 
     };
     
-    public static void createInvoiceObj() throws IOException {
+    public static void createInvoiceObj() {
        try (ObjectOutputStream out = 
                 new ObjectOutputStream(
                     new BufferedOutputStream(
@@ -274,10 +326,16 @@ public class BasicIO {
                 out.writeInt(units[i]);
                 out.writeUTF(descs[i]);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + dataFileObj + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
         } 
     }
     
-    public static void printInvoiceObj() throws IOException, ClassNotFoundException {
+    public static void printInvoiceObj() {
         BigDecimal total = new BigDecimal(0);
         try (ObjectInputStream in = 
                 new ObjectInputStream(
@@ -298,17 +356,28 @@ public class BasicIO {
                 System.out.format("You ordered %d units of %s as $%.2f %n", unit, desc, price);
                 total = total.add(price.multiply(new BigDecimal(unit)));
             }
-        } catch (EOFException e) { }
+        } catch (EOFException e) { 
+            System.out.println("Reach EOF");
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + dataFileObj + " not found.");
+            fail();
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+            fail();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Caught ClassNotFoundException: " + e.getMessage());
+            fail();
+        } 
         System.out.format("For a TOTAL of: $%.2f %n", total);
     }
     
     @Test 
-    public void testCreateInvoiceObj() throws IOException {
+    public void testCreateInvoiceObj() {
         createInvoiceObj();
     }
     
     @Test
-    public void testPrintInvoiceObj() throws IOException, ClassNotFoundException {
+    public void testPrintInvoiceObj() {
         printInvoiceObj();
     }
 }
