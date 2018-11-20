@@ -57,10 +57,8 @@ public class BasicIO {
     public void testCopyBytesBuffered() throws FileNotFoundException, IOException {
         
         try (
-            FileInputStream in = new FileInputStream("xanadu.txt");
-            BufferedInputStream bufIN = new BufferedInputStream(in);
-            FileOutputStream out = new FileOutputStream("outagain.txt");
-            BufferedOutputStream bufOUT = new BufferedOutputStream(out)
+            BufferedInputStream bufIN = new BufferedInputStream(new FileInputStream("xanadu.txt"));
+            BufferedOutputStream bufOUT = new BufferedOutputStream(new FileOutputStream("outagain.txt"))
         ) {
             int c;
             while ( (c = bufIN.read()) != -1 ) {
@@ -90,10 +88,8 @@ public class BasicIO {
     public void testCopyCharactersBuffered() throws FileNotFoundException, IOException {
         
         try (
-            FileReader inputStream  = new FileReader("xanadu.txt");
-            BufferedReader bufferedInput = new BufferedReader(inputStream);
-            FileWriter outputStream = new FileWriter("outagain.txt");
-            BufferedWriter bufferedOutput = new BufferedWriter(outputStream)
+            BufferedReader bufferedInput = new BufferedReader(new FileReader("xanadu.txt"));
+            BufferedWriter bufferedOutput = new BufferedWriter(new FileWriter("outagain.txt"))
         ) {
             int c;
             while ( (c = bufferedInput.read()) != -1 ) {
@@ -106,10 +102,8 @@ public class BasicIO {
     public void testCopyLines() throws FileNotFoundException, IOException {
         
         try (
-            FileReader inFileStream = new FileReader("xanadu.txt");
-            BufferedReader inBufferedStream = new BufferedReader(inFileStream);
-            FileWriter outFileStream = new FileWriter("outagain.txt");
-            PrintWriter outPrintStream = new PrintWriter(outFileStream)
+            BufferedReader inBufferedStream = new BufferedReader(new FileReader("xanadu.txt"));
+            PrintWriter outPrintStream = new PrintWriter(new FileWriter("outagain.txt"))
         ) {
             String l;
             while ( ( l = inBufferedStream.readLine() ) != null ) {
@@ -120,11 +114,7 @@ public class BasicIO {
     
     @Test
     public void testScanXan() throws FileNotFoundException, IOException {
-        try (
-            FileReader fr = new FileReader("xanadu.txt");
-            BufferedReader br = new BufferedReader(fr);
-            Scanner s = new Scanner(br) 
-        ) {
+        try (Scanner s = new Scanner(new BufferedReader(new FileReader("xanadu.txt")))) {
             while (s.hasNext()) {
                 System.out.println(s.next());
             }
@@ -134,11 +124,7 @@ public class BasicIO {
     @Test
     public void testScanSum() throws FileNotFoundException, IOException {
         double sum = 0;
-        try (
-            FileReader in = new FileReader("usnumbers.txt");
-            BufferedReader source = new BufferedReader(in);
-            Scanner s = new Scanner(source)
-        ){
+        try (Scanner s = new Scanner(new BufferedReader(new FileReader("usnumbers.txt")))){
             s.useLocale(Locale.US);
             while (s.hasNext()) {
                 if (s.hasNextDouble()) {
@@ -220,11 +206,11 @@ public class BasicIO {
     };
     
     public static void createInvoice() throws IOException {
-        try (
-            FileOutputStream file = new FileOutputStream(dataFile);
-            BufferedOutputStream buffered = new BufferedOutputStream(file);
-            DataOutputStream out = new DataOutputStream(buffered)
-        ){
+        try (DataOutputStream out = 
+                new DataOutputStream(
+                    new BufferedOutputStream(
+                            new FileOutputStream(dataFile))))
+        {
             for (int i=0; i<prices.length; i++) {
                 out.writeDouble(prices[i]);
                 out.writeInt(units[i]);
@@ -235,11 +221,11 @@ public class BasicIO {
     
     public static void printInvoice() throws IOException {
         double total = 0;
-        try (
-            FileInputStream file = new FileInputStream(dataFile);
-            BufferedInputStream buffered = new BufferedInputStream(file);
-            DataInputStream in = new DataInputStream(buffered);
-        ) {
+        try (DataInputStream in = 
+                new DataInputStream(
+                    new BufferedInputStream(
+                        new FileInputStream(dataFile))))
+        {
             double price;
             int unit;
             String desc;
@@ -267,6 +253,7 @@ public class BasicIO {
     //----------------------------------------------------------------------------------------------
     // OBJECT STREAMS
     
+    static final String dataFileObj  = "invoicedataObj";
     static final BigDecimal[] pricesObj = { 
         new BigDecimal("19.99"), 
         new BigDecimal("9.99"),
@@ -276,11 +263,11 @@ public class BasicIO {
     };
     
     public static void createInvoiceObj() throws IOException {
-       try (
-            FileOutputStream file = new FileOutputStream(dataFile);
-            BufferedOutputStream buffered = new BufferedOutputStream(file);
-            ObjectOutputStream out = new ObjectOutputStream(buffered)
-        ){
+       try (ObjectOutputStream out = 
+                new ObjectOutputStream(
+                    new BufferedOutputStream(
+                        new FileOutputStream(dataFileObj))))
+        {
             out.writeObject(Calendar.getInstance());
             for (int i=0; i<prices.length; i++) {
                 out.writeObject(pricesObj[i]);
@@ -292,11 +279,11 @@ public class BasicIO {
     
     public static void printInvoiceObj() throws IOException, ClassNotFoundException {
         BigDecimal total = new BigDecimal(0);
-        try (
-            FileInputStream file = new FileInputStream(dataFile);
-            BufferedInputStream buffered = new BufferedInputStream(file);
-            ObjectInputStream in = new ObjectInputStream(buffered);
-        ) {
+        try (ObjectInputStream in = 
+                new ObjectInputStream(
+                    new BufferedInputStream(
+                        new FileInputStream(dataFileObj))))
+        {
             BigDecimal price;
             int unit;
             String desc;
