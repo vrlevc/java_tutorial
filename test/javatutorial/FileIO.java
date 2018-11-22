@@ -126,4 +126,33 @@ public class FileIO {
         
     }
    
+    @Test 
+    public void testRelativize() {
+        
+        Path p1 = Paths.get("joe");
+        Path p2 = Paths.get("sally");
+        
+        // Result is ../sally
+        Path p1_to_p2 = p1.relativize(p2);
+        // Result is ../joe
+        Path p2_to_p1 = p2.relativize(p1);
+        
+        assertEquals("../sally", p1_to_p2.toString());
+        assertEquals("../joe", p2_to_p1.toString());
+        System.out.println(p1_to_p2);
+        System.out.println(p2_to_p1);
+        
+        Path p3 = Paths.get("home");
+        Path p4 = Paths.get("home/sally/bar");
+        // Result is sally/bar
+        Path p3_to_p4 = p3.relativize(p4);
+        // Result is ../..
+        Path p4_to_p3 = p4.relativize(p3);
+
+        assertEquals("sally/bar", p3_to_p4.toString());
+        assertEquals("../..", p4_to_p3.toString());
+        System.out.println(p3_to_p4);
+        System.out.println(p4_to_p3);
+
+    }
 }
