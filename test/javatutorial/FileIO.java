@@ -80,8 +80,8 @@ public class FileIO {
        assertEquals(pathA.normalize().toString(), "/home/joe/foo");
    }
    
-   @Test 
-   public void testPathConverting() {
+    @Test 
+    public void testPathConverting() {
        
         Path p1 = Paths.get("/home/logfile");
         System.out.format("%s%n", p1);
@@ -108,6 +108,22 @@ public class FileIO {
             System.err.format("%s%n", e);
             // Logic for other sort of file error.
         }
-   }
+    }
+    
+    @Test
+    public void testResolve() {
+        
+        // Solaris
+        Path p1 = Paths.get("/home/joe/foo");
+        // Result is /home/joe/foo/bar
+        System.out.format("%s%n", p1.resolve("bar"));
+        assertEquals("/home/joe/foo/bar", p1.resolve("bar").toString());
+        
+        // Microsoft Windows
+        Path p2 = Paths.get("C:\\home\\joe\\foo");
+        // Result is C:\home\joe\foo\bar
+        System.out.format("%s%n", p2.resolve("bar"));
+        
+    }
    
 }
