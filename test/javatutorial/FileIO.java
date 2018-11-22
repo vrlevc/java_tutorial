@@ -53,12 +53,16 @@ public class FileIO {
        // Solaris 
        Path pathSL = Paths.get("/home/joe/foo");
        
-       System.out.println("Microsoft Windows : \"c:\\home\\joe\\foo\"");
-//       printPathInfo(pathPC);
+//     System.out.println("Microsoft Windows : \"c:\\home\\joe\\foo\"");
+//     printPathInfo(pathPC);
        
-       System.out.println("Solaris : \"/home/joe/foo\"");
-//       printPathInfo(pathSL);
+//     System.out.println("Solaris : \"/home/joe/foo\"");
+//     printPathInfo(pathSL);
        
+        // Try real path 
+        Path path = Paths.get("Macintosh HD/Users/vitya/JavaProjects/java_tutorial");
+        printPathInfo(path);
+
    }
    
 }
