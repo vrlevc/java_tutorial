@@ -5,6 +5,7 @@
  */
 package javatutorial;
 
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -77,6 +78,36 @@ public class FileIO {
        System.out.println(pathB);
        System.out.println(pathB.normalize());
        assertEquals(pathA.normalize().toString(), "/home/joe/foo");
+   }
+   
+   @Test 
+   public void testPathConverting() {
+       
+        Path p1 = Paths.get("/home/logfile");
+        System.out.format("%s%n", p1);
+        System.out.format("toUri: %s%n", p1.toUri());
+        assertEquals("file:///home/logfile", p1.toUri().toString());
+    
+        Path path = Paths.get("README.md");
+        Path fullPath = path.toAbsolutePath();
+        System.out.format("%s%n", path);
+        System.out.format("toAbsolutePath: %s%n", fullPath);
+        
+        // - If true is passed to this method and the file system supports symbolic links, 
+        //   this method resolves any symbolic links in the path.
+        // - If the Path is relative, it returns an absolute path.
+        // - If the Path contains any redundant elements, it returns a path with those 
+        //   elements removed.
+        try {
+            Path realPath = path.toRealPath();
+            System.out.format("toRealPath: %s%n", realPath);
+        } catch (NoSuchFieldError e) {
+            System.err.format("%s: no such" + " file or directory%n", path);
+            // Logic for case when file doesn't exist.
+        } catch (IOException e) {
+            System.err.format("%s%n", e);
+            // Logic for other sort of file error.
+        }
    }
    
 }
