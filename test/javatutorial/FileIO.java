@@ -65,4 +65,18 @@ public class FileIO {
 
    }
    
+   @Test
+   public void testNormalize() {
+       
+       Path pathA = Paths.get("/home/./joe/foo");
+       System.out.println(pathA);
+       System.out.println(pathA.normalize());
+       assertEquals(pathA.normalize().toString(), "/home/joe/foo");
+       
+       Path pathB = Paths.get("/home/sally/../joe/foo");
+       System.out.println(pathB);
+       System.out.println(pathB.normalize());
+       assertEquals(pathA.normalize().toString(), "/home/joe/foo");
+   }
+   
 }
